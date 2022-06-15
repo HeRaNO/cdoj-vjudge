@@ -1,0 +1,20 @@
+RDB:
+  Host: 'localhost'
+  Port: 3306
+  Username: 'mariadb'
+  Password: 'mariadb'
+  DBName: ''
+  TimeZone: 'Asia/Shanghai'
+Redis:
+  Host: 'localhost'
+  Port: 6379
+  Password: ''
+  DB: 0
+MQ:
+  Host: 'localhost'
+  Port: 5672
+  Username: 'guest'
+  Password: 'guest'
+  QueueName: 'cdoj-vjudge-judging-queue'
+Server:
+  Port: 12345
