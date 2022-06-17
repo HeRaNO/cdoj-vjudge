@@ -15,6 +15,9 @@ type Problem struct {
 	Input        string `gorm:"column:standard_input" json:"input"`
 	Output       string `gorm:"column:standard_output" json:"output"`
 	Note         string `gorm:"column:note" json:"note"`
+	IsDisable    int    `gorm:"column:disable" json:"disable"`
+	Submit       int32  `gorm:"column:submit" json:"submit"`
+	Accept       int32  `gorm:"column:accept" json:"accept"`
 	Checker      string `gorm:"column:_checker" json:"checker"`
 	LimitationID int64  `gorm:"column:limitation_id" json:"limitation_id"`
 }
@@ -29,9 +32,9 @@ type Limitation struct {
 
 type ProblemSample struct {
 	ID           int64  `gorm:"column:id" json:"id"`
-	SampleInput  string `gorm:"input_content" json:"sample_input"`
-	SampleOutput string `gorm:"output_content" json:"sample_output"`
-	ProblemID    int64  `gorm:"problem_id" json:"problem_id"`
+	SampleInput  string `gorm:"column:input_content" json:"sample_input"`
+	SampleOutput string `gorm:"column:output_content" json:"sample_output"`
+	ProblemID    int64  `gorm:"column:problem_id" json:"problem_id"`
 }
 
 type Sample struct {
@@ -52,6 +55,8 @@ type Statement struct {
 	Samples     []Sample `json:"samples"`
 	TimeLimit   int64    `json:"time_limit"`
 	MemoryLimit int64    `json:"memory_limit"`
+	Submit      int32    `json:"submit"`
+	Accept      int32    `json:"accept"`
 }
 
 type ProblemInfo struct {
@@ -78,6 +83,8 @@ func MakeStatement(problem Problem, limitation *Limitation, problemSamples []Pro
 		Note:        problem.Note,
 		Checker:     problem.Checker,
 		Samples:     samples,
+		Submit:      problem.Submit,
+		Accept:      problem.Accept,
 		TimeLimit:   limitation.TimeLimit,
 		MemoryLimit: limitation.MemoryLimit,
 	}

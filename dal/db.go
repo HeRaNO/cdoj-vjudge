@@ -51,6 +51,10 @@ func GetStatementByProblemID(ctx context.Context, problemID int64) (*model.State
 		return nil, errors.New("duplicate problem_id but why???")
 	}
 
+	if problem.IsDisable == 1 {
+		return nil, errors.New("the problem is not published")
+	}
+
 	wg := sync.WaitGroup{}
 	oneErr := util.OneError{}
 	samples := make([]model.ProblemSample, 0)
@@ -91,7 +95,7 @@ func GetProblemInfo(ctx context.Context, problemName *string, offset int64, limi
 	if *problemName != "" {
 		result = result.Where("title like ?", "%"+*problemName+"%")
 	}
-	result = result.Order("id").Offset(int(offset)).Limit(int(limit)).Scan(&problemInfo)
+	result = result.Where("disable = 0").Order("id").Offset(int(offset)).Limit(int(limit)).Scan(&problemInfo)
 	if result.Error != nil {
 		return nil, result.Error
 	}
