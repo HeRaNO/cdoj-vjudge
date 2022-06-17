@@ -4,7 +4,6 @@ RDB:
   Username: 'mariadb'
   Password: 'mariadb'
   DBName: ''
-  TimeZone: 'Asia/Shanghai'
 Redis:
   Host: 'localhost'
   Port: 6379

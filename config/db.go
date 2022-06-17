@@ -13,8 +13,8 @@ var RDB *gorm.DB
 func InitDB() {
 	var err error
 	config := conf.RDB
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=%s",
-		config.Username, config.Password, config.Host, config.Port, config.DBName, config.TimeZone)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True",
+		config.Username, config.Password, config.Host, config.Port, config.DBName)
 	RDB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Println("[FAILED] init RDB failed")
