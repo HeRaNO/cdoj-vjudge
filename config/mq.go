@@ -9,7 +9,7 @@ import (
 
 var MQCh *amqp.Channel
 var MQ <-chan amqp.Delivery
-var QueueName string
+var QueueName, ReplyQueueName string
 
 func InitMQ() {
 	config := conf.MQ
@@ -27,7 +27,7 @@ func InitMQ() {
 		log.Println("[FATAL] Init message queue failed: init channel failed")
 		panic(err)
 	}
-	q, err := MQCh.QueueDeclare(config.QueueName, true, false, true, false, nil)
+	q, err := MQCh.QueueDeclare("", true, false, true, false, nil)
 	if err != nil {
 		log.Println("[FATAL] Init message queue failed: declare queue failed")
 		panic(err)
@@ -37,6 +37,7 @@ func InitMQ() {
 		log.Println("[FATAL] Init message queue failed: set Qos failed")
 		panic(err)
 	}
+	ReplyQueueName = q.Name
 	MQ, err = MQCh.Consume(q.Name, "", false, false, false, false, nil)
 	if err != nil {
 		log.Println("[FATAL] Init message queue failed: failed to register a consumer")

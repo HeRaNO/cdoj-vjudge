@@ -16,7 +16,7 @@ func MakeUserPasswordKey(username *string) string {
 }
 
 func MakeResultKey(submissionID *string) string {
-	return fmt.Sprintf("%s:%d", model.SubmissionResultKey, submissionID)
+	return fmt.Sprintf("%s:%s", model.SubmissionResultKey, *submissionID)
 }
 
 func IsAuthValid(ctx context.Context, username *string, password *string) (bool, error) {
@@ -48,7 +48,7 @@ func GetSubmissionResult(ctx context.Context, submissionID *string) (string, err
 	key := MakeResultKey(submissionID)
 	ret, err := config.RedisClient.Get(ctx, key).Result()
 	if err == redis.Nil {
-		log.Printf("[INFO] GetSubmissionResult(): key is nil, submissionID: %d\n", submissionID)
+		log.Printf("[INFO] GetSubmissionResult(): key is nil, submissionID: %s\n", *submissionID)
 		return "", errors.New("no such submission")
 	} else if err != nil {
 		log.Printf("[ERROR] GetSubmissionResult(): redis query error, err: %s", err.Error())

@@ -1,7 +1,7 @@
 package model
 
 const (
-	SubmissionResultKey = "RESULT:"
+	SubmissionResultKey = "RESULT"
 )
 
 type Result struct {

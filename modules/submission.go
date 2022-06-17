@@ -52,9 +52,9 @@ func UpdateStatus(resp workmodel.Response, corId string) {
 	res := model.Result{}
 	switch resp.ErrCode {
 	case workconfig.CE:
-		res = util.MakeCEResult(resp.Data.(*workmodel.OmitString))
+		res = util.MakeCEResult(resp.Data)
 	case workconfig.RE:
-		res = util.MakeREResult(resp.ErrMsg, resp.Data.(workmodel.ExecResult))
+		res = util.MakeREResult(resp.ErrMsg, resp.Data)
 	case workconfig.IE:
 		res = util.MakeIEResult()
 	case workconfig.OK:
@@ -79,6 +79,7 @@ func ListenMQ() {
 		res := workmodel.Response{}
 		err := sonic.Unmarshal(resp.Body, &res)
 		resp.Ack(false)
+		log.Printf("[INFO] mq received msg: %+v", res)
 		if err != nil {
 			log.Printf("[ERROR] ListenMQ(): unmarshal error: %s", err.Error())
 			continue

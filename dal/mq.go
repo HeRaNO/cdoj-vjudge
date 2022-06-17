@@ -18,7 +18,7 @@ func SendMessage(req model.ExecRequest) (string, error) {
 	return corId, ch.Publish("", config.QueueName, false, false, amqp091.Publishing{
 		ContentType:   "application/json",
 		CorrelationId: corId,
-		ReplyTo:       config.QueueName,
+		ReplyTo:       config.ReplyQueueName,
 		Body:          bd,
 	})
 }
