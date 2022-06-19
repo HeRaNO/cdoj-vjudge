@@ -15,6 +15,10 @@ func SearchProblems(ctx iris.Context) {
 		ctx.JSON(util.ErrorResponse(config.ErrWrongInfo, "page size too large"))
 		return
 	}
+	if pageSize <= 0 {
+		ctx.JSON(util.ErrorResponse(config.ErrWrongInfo, "page size should greater than 0"))
+		return
+	}
 	info, err := dal.GetProblemInfo(ctx, &problemName, (page-1)*pageSize, pageSize)
 	if err != nil {
 		ctx.JSON(util.ErrorResponse(config.ErrInternal, err.Error()))
