@@ -35,6 +35,11 @@ func Submit(ctx iris.Context) {
 		ctx.JSON(util.ErrorResponse(config.ErrInternal, err.Error()))
 		return
 	}
+	nowStatus := model.Result{
+		Verdict: "Compiling",
+	}
+	nowSta, _ := sonic.MarshalString(nowStatus)
+	dal.SetSubmissionResult(ctx, &id, &nowSta)
 	ctx.JSON(util.SuccessResponse(id))
 }
 
