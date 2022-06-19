@@ -117,6 +117,10 @@ func GetProblemCheckerInfo(ctx context.Context, problemID int64) (string, *model
 		return "", nil, errors.New("duplicate problem_id but why???")
 	}
 
+	if problem.IsDisable == 1 {
+		return "", nil, errors.New("the problem is not published")
+	}
+
 	limit, err := GetLimitationByLimitationID(ctx, problem.LimitationID)
 	if err != nil {
 		return "", nil, err
