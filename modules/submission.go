@@ -84,7 +84,6 @@ func ListenMQ() {
 		res := workmodel.Response{}
 		err := sonic.Unmarshal(resp.Body, &res)
 		resp.Ack(false)
-		log.Printf("[INFO] mq received msg: %+v", res)
 		if err != nil {
 			log.Printf("[ERROR] ListenMQ(): unmarshal error: %s", err.Error())
 			continue
