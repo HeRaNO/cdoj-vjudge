@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 )
 
 var RedisClient *redis.Client
@@ -16,11 +16,10 @@ func InitRedis() {
 		panic("[FAILED] config file failed - Redis")
 	}
 	RedisClient = redis.NewClient(&redis.Options{
-		Addr:               fmt.Sprintf("%s:%d", config.Host, config.Port),
-		Password:           config.Password,
-		DB:                 config.DB,
-		IdleTimeout:        time.Minute,
-		IdleCheckFrequency: time.Second,
+		Addr:            fmt.Sprintf("%s:%d", config.Host, config.Port),
+		Password:        config.Password,
+		DB:              config.DB,
+		ConnMaxIdleTime: time.Minute,
 	})
 	if RedisClient == nil {
 		panic("[FAILED] init Redis failed")

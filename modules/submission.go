@@ -30,7 +30,7 @@ func Submit(ctx iris.Context) {
 		ctx.JSON(util.ErrorResponse(config.ErrWrongInfo, err.Error()))
 		return
 	}
-	id, err := dal.SendMessage(execReq)
+	id, err := dal.SendMessage(ctx, execReq)
 	if err != nil {
 		ctx.JSON(util.ErrorResponse(config.ErrInternal, err.Error()))
 		return

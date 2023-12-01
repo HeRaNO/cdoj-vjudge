@@ -8,7 +8,7 @@ import (
 
 	"github.com/HeRaNO/cdoj-vjudge/config"
 	"github.com/HeRaNO/cdoj-vjudge/model"
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 )
 
 func MakeUserPasswordKey(username *string) string {

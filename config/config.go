@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"gopkg.in/yaml.v3"
 )
@@ -47,7 +47,7 @@ type SrvConfig struct {
 var SrvAddr string
 
 func InitConfig(file *string) {
-	fileBytes, err := ioutil.ReadFile(*file)
+	fileBytes, err := os.ReadFile(*file)
 	if err != nil {
 		log.Println("[FAILED] read config file failed")
 		panic(err)
