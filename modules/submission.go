@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 
-	workconfig "github.com/HeRaNO/cdoj-execution-worker/config"
 	workmodel "github.com/HeRaNO/cdoj-execution-worker/model"
 	"github.com/HeRaNO/cdoj-vjudge/config"
 	"github.com/HeRaNO/cdoj-vjudge/dal"
@@ -56,13 +55,13 @@ func GetStatus(ctx iris.Context) {
 func UpdateStatus(resp workmodel.Response, corId string) {
 	res := model.Result{}
 	switch resp.ErrCode {
-	case workconfig.CE:
+	case workmodel.CE:
 		res = util.MakeCEResult(resp.Data)
-	case workconfig.RE:
+	case workmodel.RE:
 		res = util.MakeREResult(resp.ErrMsg, resp.Data)
-	case workconfig.IE:
+	case workmodel.IE:
 		res = util.MakeIEResult()
-	case workconfig.OK:
+	case workmodel.OK:
 		if resp.ErrMsg != "running" && resp.ErrMsg != "success" && resp.ErrMsg != "wrong answer" {
 			res = util.MakeUnknownResult("unknown error message")
 		} else {
